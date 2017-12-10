@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ import com.google.common.io.Resources;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.UnsignedLongs;
 
+import afu.org.checkerframework.checker.nullness.qual.Nullable;
 import eu.bittrade.crypto.core.base58.Base58;
 import eu.bittrade.crypto.core.base58.Base58ChecksumProvider;
 
@@ -568,12 +570,16 @@ public class CryptoUtils {
      *
      * <tt><p>[24] "Bitcoin Signed Message:\n" [message.length as a varint] message</p></tt>
      */
-    public static byte[] formatMessageForSigning(String message, byte[] headerBytes) {
+    public static byte[] formatMessageForSigning(String message, Charset charset, @Nullable byte[] headerBytes) {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bos.write(headerBytes.length);
-            bos.write(headerBytes);
-            byte[] messageBytes = message.getBytes(Charsets.UTF_8);
+
+            if (headerBytes != null && headerBytes.length > 0) {
+                bos.write(headerBytes.length);
+                bos.write(headerBytes);
+            }
+
+            byte[] messageBytes = message.getBytes(charset);
             VarInt size = new VarInt(messageBytes.length);
             bos.write(size.encode());
             bos.write(messageBytes);

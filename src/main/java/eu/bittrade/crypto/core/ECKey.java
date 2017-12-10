@@ -600,9 +600,9 @@ public class ECKey {
      * key and is not the public key itself (which is too large to be
      * convenient).
      */
-    //public Address toAddress(NetworkParameters params) {
-    //    return new Address(params, getPubKeyHash());
-    //}
+    // public Address toAddress(NetworkParameters params) {
+    // return new Address(params, getPubKeyHash());
+    // }
 
     /**
      * Groups the two components that make up a signature, and provides a way to
@@ -735,9 +735,9 @@ public class ECKey {
     /**
      * Signs the given hash and returns the R and S components as BigIntegers.
      * In the Bitcoin protocol, they are usually encoded using ASN.1 format, so
-     * you want {@link eu.bittrade.crypto.core.ECKey.ECDSASignature#toASN1()} instead.
-     * However sometimes the independent components can be useful, for instance,
-     * if you're going to do further EC maths on them.
+     * you want {@link eu.bittrade.crypto.core.ECKey.ECDSASignature#toASN1()}
+     * instead. However sometimes the independent components can be useful, for
+     * instance, if you're going to do further EC maths on them.
      * 
      * @throws KeyCrypterException
      *             if this ECKey doesn't have a private part.
@@ -758,7 +758,8 @@ public class ECKey {
     /**
      * Signs the given hash and returns the R and S components as BigIntegers.
      * In the Bitcoin protocol, they are usually encoded using DER format, so
-     * you want {@link eu.bittrade.crypto.core.ECKey.ECDSASignature#encodeToDER()}
+     * you want
+     * {@link eu.bittrade.crypto.core.ECKey.ECDSASignature#encodeToDER()}
      * instead. However sometimes the independent components can be useful, for
      * instance, if you're doing to do further EC maths on them.
      *
@@ -796,8 +797,8 @@ public class ECKey {
             }
         }
         if (FAKE_SIGNATURES)
-//            return TransactionSignature.dummy();
-        checkNotNull(privateKeyForSigning);
+            // return TransactionSignature.dummy();
+            checkNotNull(privateKeyForSigning);
         ECDSASigner signer = new ECDSASigner(new HMacDSAKCalculator(new SHA256Digest()));
         ECPrivateKeyParameters privKey = new ECPrivateKeyParameters(privateKeyForSigning, CURVE);
         signer.init(true, privKey);
@@ -996,23 +997,29 @@ public class ECKey {
      *             if this ECKey is encrypted and no AESKey is provided or it
      *             does not decrypt the ECKey.
      */
-    public String signMessage(String message) throws KeyCrypterException {
-        return signMessage(message, null);
+    public String signMessage(String message, Charset charset, @Nullable byte[] headerBytes) {
+        return signMessage(message, charset, null, headerBytes);
     }
 
     /**
      * Signs a text message using the standard Bitcoin messaging signing format
      * and returns the signature as a base64 encoded string.
-     *
+     * 
+     * Some blockchains require additional header bytes infront of the message.
+     * <tt><p>[24] "Bitcoin Signed Message:\n" [message.length as a varint] message</p></tt>
+     * 
+     * @param headerBytes
+     *            the additional header bytes required by the blockchain.
      * @throws IllegalStateException
      *             if this ECKey does not have the private part.
      * @throws KeyCrypterException
      *             if this ECKey is encrypted and no AESKey is provided or it
      *             does not decrypt the ECKey.
      */
-    public String signMessage(String message, @Nullable KeyParameter aesKey) throws KeyCrypterException {
-//        byte[] data = CryptoUtils.formatMessageForSigning(message);
-        Sha256Hash hash = Sha256Hash.twiceOf(null);
+    public String signMessage(String message, Charset charset, @Nullable KeyParameter aesKey,
+            @Nullable byte[] headerBytes) {
+        byte[] data = CryptoUtils.formatMessageForSigning(message, charset, headerBytes);
+        Sha256Hash hash = Sha256Hash.twiceOf(data);
         ECDSASignature sig = sign(hash, aesKey);
         // Now we have to work backwards to figure out the recId needed to
         // recover the signature.
@@ -1074,21 +1081,23 @@ public class ECKey {
         BigInteger r = new BigInteger(1, Arrays.copyOfRange(signatureEncoded, 1, 33));
         BigInteger s = new BigInteger(1, Arrays.copyOfRange(signatureEncoded, 33, 65));
         ECDSASignature sig = new ECDSASignature(r, s);
-//        byte[] messageBytes = CryptoUtils.formatMessageForSigning(message);
+        // byte[] messageBytes = CryptoUtils.formatMessageForSigning(message);
         // Note that the C++ code doesn't actually seem to specify any character
         // encoding. Presumably it's whatever
         // JSON-SPIRIT hands back. Assume UTF-8 for now.
-//        Sha256Hash messageHash = Sha256Hash.twiceOf(messageBytes);
+        // Sha256Hash messageHash = Sha256Hash.twiceOf(messageBytes);
         boolean compressed = false;
         if (header >= 31) {
             compressed = true;
             header -= 4;
         }
         int recId = header - 27;
-//        ECKey key = ECKey.recoverFromSignature(recId, sig, messageHash, compressed);
-//        if (key == null)
-//            throw new SignatureException("Could not recover public key from signature");
-//        return key;
+        // ECKey key = ECKey.recoverFromSignature(recId, sig, messageHash,
+        // compressed);
+        // if (key == null)
+        // throw new SignatureException("Could not recover public key from
+        // signature");
+        // return key;
         return null;
     }
 
@@ -1227,8 +1236,8 @@ public class ECKey {
     /**
      * Exports the private key in the form used by Bitcoin Core's "dumpprivkey"
      * and "importprivkey" commands. Use the
-     * {@link eu.bittrade.crypto.core.DumpedPrivateKey#toString()} method to get the
-     * string.
+     * {@link eu.bittrade.crypto.core.DumpedPrivateKey#toString()} method to get
+     * the string.
      *
      * @return Private key bytes as a {@link DumpedPrivateKey}.
      * @throws IllegalStateException
@@ -1382,10 +1391,11 @@ public class ECKey {
         return keyCrypter != null && encryptedPrivateKey != null && encryptedPrivateKey.encryptedBytes.length > 0;
     }
 
-    //@Nullable
-    //public Protos.Wallet.EncryptionType getEncryptionType() {
-    //    return keyCrypter != null ? keyCrypter.getUnderstoodEncryptionType() : EncryptionType.UNENCRYPTED;
-    //}
+    // @Nullable
+    // public Protos.Wallet.EncryptionType getEncryptionType() {
+    // return keyCrypter != null ? keyCrypter.getUnderstoodEncryptionType() :
+    // EncryptionType.UNENCRYPTED;
+    // }
 
     /**
      * A wrapper for {@link #getPrivKeyBytes()} that returns null if the private
@@ -1458,7 +1468,7 @@ public class ECKey {
      * just use {@link #toString()}.
      */
     public String toStringWithPrivate(@Nullable KeyParameter aesKey, Object params) {
-       // return toString(true, aesKey, params);
+        // return toString(true, aesKey, params);
         return "";
     }
 
@@ -1500,20 +1510,16 @@ public class ECKey {
         return helper.toString();
     }
 
-   /* public void formatKeyWithAddress(boolean includePrivateKeys, @Nullable KeyParameter aesKey, StringBuilder builder,
-            NetworkParameters params) {
-        final Address address = toAddress(params);
-        builder.append("  addr:");
-        builder.append(address.toString());
-        builder.append("  hash160:");
-        builder.append(CryptoUtils.HEX.encode(getPubKeyHash()));
-        if (creationTimeSeconds > 0)
-            builder.append("  creationTimeSeconds:").append(creationTimeSeconds);
-        builder.append("\n");
-        if (includePrivateKeys) {
-            builder.append("  ");
-            builder.append(toStringWithPrivate(aesKey, params));
-            builder.append("\n");
-        }
-    }*/
+    /*
+     * public void formatKeyWithAddress(boolean includePrivateKeys, @Nullable
+     * KeyParameter aesKey, StringBuilder builder, NetworkParameters params) {
+     * final Address address = toAddress(params); builder.append("  addr:");
+     * builder.append(address.toString()); builder.append("  hash160:");
+     * builder.append(CryptoUtils.HEX.encode(getPubKeyHash())); if
+     * (creationTimeSeconds > 0)
+     * builder.append("  creationTimeSeconds:").append(creationTimeSeconds);
+     * builder.append("\n"); if (includePrivateKeys) { builder.append("  ");
+     * builder.append(toStringWithPrivate(aesKey, params));
+     * builder.append("\n"); } }
+     */
 }
