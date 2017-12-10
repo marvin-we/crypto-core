@@ -1,4 +1,6 @@
-package eu.bittrade.crypto.core;
+package eu.bittrade.crypto.core.base58;
+
+import eu.bittrade.crypto.core.Sha256Hash;
 
 /**
  * Calculate the actual checksum of a <code>Base58</code> value for blockchains

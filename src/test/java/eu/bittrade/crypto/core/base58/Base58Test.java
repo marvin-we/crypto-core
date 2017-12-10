@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package eu.bittrade.crypto.core;
+package eu.bittrade.crypto.core.base58;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+
+import eu.bittrade.crypto.core.AddressFormatException;
+import eu.bittrade.crypto.core.base58.Base58;
+import eu.bittrade.crypto.core.base58.Sha256ChecksumProvider;
 
 import java.math.BigInteger;
 import java.util.Arrays;

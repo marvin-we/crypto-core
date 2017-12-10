@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package eu.bittrade.crypto.core;
+package eu.bittrade.crypto.core.base58;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+
+import eu.bittrade.crypto.core.AddressFormatException;
 
 /**
  * Base58 is a way to encode Bitcoin addresses (or arbitrary data) as

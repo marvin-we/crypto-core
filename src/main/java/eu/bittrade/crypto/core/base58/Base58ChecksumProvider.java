@@ -1,4 +1,4 @@
-package eu.bittrade.crypto.core;
+package eu.bittrade.crypto.core.base58;
 
 /**
  * This interface allows to implement a custom method which will be called to

@@ -1,10 +1,10 @@
-package eu.bittrade.crypto.core;
+package eu.bittrade.crypto.core.base58;
 
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 
 /**
  * Calculate the actual checksum of a <code>Base58</code> value for blockchains
- * based on <code>RIPEMD160</code>.
+ * based on <code>RIPEMD160</code> (e.g. Steem).
  * 
  * @author <a href="http://steemit.com/@dez1337">dez1337</a>
  */
