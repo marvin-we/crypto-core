@@ -59,7 +59,7 @@ import eu.bittrade.crypto.core.base58.Base58ChecksumProvider;
  * blockchain protocol.
  */
 public class CryptoUtils {
-
+    /** Mock for testing. */
     private static BlockingQueue<Boolean> mockSleepQueue;
 
     /**
