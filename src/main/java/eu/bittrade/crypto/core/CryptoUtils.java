@@ -41,6 +41,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Nullable;
+
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 
 import com.google.common.base.Charsets;
@@ -52,7 +54,6 @@ import com.google.common.io.Resources;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.UnsignedLongs;
 
-import afu.org.checkerframework.checker.nullness.qual.Nullable;
 import eu.bittrade.crypto.core.base58.Base58;
 import eu.bittrade.crypto.core.base58.Base58ChecksumProvider;
 

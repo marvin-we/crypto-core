@@ -1041,7 +1041,7 @@ public class ECKey {
         System.arraycopy(CryptoUtils.bigIntegerToBytes(sig.s, 32), 0, sigData, 33, 32);
         return new String(Base64.encode(sigData), Charset.forName("UTF-8"));
     }
-    
+
     public String signMessage(Sha256Hash messageHash) {
         return signMessage(messageHash, null);
     }
