@@ -36,7 +36,7 @@ import eu.bittrade.crypto.core.base58.Base58ChecksumProvider;
  * <pre>
  * [one version byte] [data bytes] [4 checksum bytes]
  * </pre>
- * <p/>
+ *
  * <p>
  * and the result is then Base58 encoded. This format is used for addresses, and
  * private keys exported using the dumpprivkey command.
