@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 
 import eu.bittrade.crypto.core.AddressFormatException;
+import eu.bittrade.crypto.core.VersionedChecksummedBytes;
 
 /**
  * Base58 is a way to encode Bitcoin addresses (or arbitrary data) as
