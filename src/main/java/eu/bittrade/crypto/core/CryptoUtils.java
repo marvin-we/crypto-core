@@ -569,7 +569,7 @@ public class CryptoUtils {
      * Given a textual message, returns a byte buffer formatted as follows:
      * </p>
      *
-     * <tt><p>[24] "Bitcoin Signed Message:\n" [message.length as a varint] message</p></tt>
+     * <code>[24] "Bitcoin Signed Message:\n" [message.length as a varint] message</code>
      */
     public static byte[] formatMessageForSigning(String message, Charset charset, @Nullable byte[] headerBytes) {
         try {

@@ -1006,7 +1006,7 @@ public class ECKey {
      * and returns the signature as a base64 encoded string.
      * 
      * Some blockchains require additional header bytes infront of the message.
-     * <tt><p>[24] "Bitcoin Signed Message:\n" [message.length as a varint] message</p></tt>
+     * <code>[24] "Bitcoin Signed Message:\n" [message.length as a varint] message</code>
      * 
      * @param headerBytes
      *            the additional header bytes required by the blockchain.
