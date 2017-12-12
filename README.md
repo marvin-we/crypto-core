@@ -138,7 +138,7 @@ The project requires Maven and Java to be installed on your machine. It can be b
 The resulting JAR can be found in the target directory as usual. 
 
 # Bugs and Feedback
-For bugs or feature requests please create a [GitHub Issue](https://github.com/marvin-we/steem-java-api-wrapper/issues). 
+For bugs or feature requests please create a [GitHub Issue](https://github.com/marvin-we/crypto-core/issues). 
 
 For general discussions or questions you can also:
 * Post your questions in the [Discord Java Channel](https://discord.gg/fsJjr3Q)
